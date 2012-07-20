@@ -54,7 +54,7 @@ public class BuscaTest {
 		BlogController controller = new BlogController(new ComentariosDao(
 				this.session), result);
 
-		controller.comentario(comentario);
+		controller.comentario(comentario, comentario.getAssunto());
 	}
 
 	private int verificaQuantidadeDePostsRetornados(List<Comentario> comentarios) {
@@ -62,12 +62,13 @@ public class BuscaTest {
 		return comentarios.size();
 	}
 
-	private List<Comentario> fazBusca(String tema) {
+	private List<Comentario> fazBusca(String assunto) {
 		MockResult result = new MockResult();
 
 		BlogController controller = new BlogController(new ComentariosDao(
 				this.session), result);
-		return controller.busca(tema);
+		controller.busca(assunto);
+		return result.included("posts");
 
 	}
 

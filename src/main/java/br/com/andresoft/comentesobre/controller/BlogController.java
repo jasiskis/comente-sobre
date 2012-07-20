@@ -1,5 +1,6 @@
 package br.com.andresoft.comentesobre.controller;
 
+import java.util.Calendar;
 import java.util.List;
 
 import br.com.andresoft.comentesobre.dao.ComentariosDao;
@@ -21,13 +22,26 @@ public class BlogController {
 		this.result = result;
 	}
 
-	@Get @Path("/blog/{assunto}")
-	public List<Comentario> busca(String assunto) {
-		return comentariosDao.buscaPorAssunto(assunto);
+	@Get @Path("/{assunto}")
+	public void busca(String assunto) {
+		List<Comentario> buscaPorAssunto = comentariosDao.buscaPorAssunto(assunto);
+		
+		result.include("posts", buscaPorAssunto);
+		result.include("assunto", assunto);
 
 	}
-
-	public void comentario(Comentario comentario) {
+	
+	@Get @Path("/{assunto}/comentario")
+	public void comentario(Comentario comentario, String assunto) {
+		
+		comentario.setData(Calendar.getInstance());
+				
+		System.out.println(comentario.getTexto()+""+comentario.getEmail());
 		comentariosDao.adiciona(comentario);
+
+		result.include("posts", comentariosDao.buscaPorAssunto(assunto));
+		result.include("assunto", assunto);
+		
+		result.redirectTo(BlogController.class).busca(assunto);
 	}
 }
