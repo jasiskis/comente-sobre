@@ -26,15 +26,18 @@ public class BlogController {
 
 	@Get @Path("/{assunto}")
 	public void busca(String assunto) {
-		List<Comentario> buscaPorAssunto = comentariosDao.buscaPorAssunto(assunto);
+		String assuntoFormatado = formataAssuntoTiraHifen(assunto);
+		List<Comentario> buscaPorAssunto = comentariosDao.buscaPorAssunto(assuntoFormatado);
 		
 		result.include("posts", buscaPorAssunto);
-		result.include("assunto", assunto);
+		result.include("assunto", assuntoFormatado);
 
 	}
 	
 	@Get @Path("/{assunto}/comentario")
 	public void comentario(final Comentario comentario, String assunto) {
+		String assuntoFormatadoComHifen = formataAssuntoColocaHifen(assunto);
+		
 		validator.validate(comentario);
 		validator.onErrorForwardTo(this).busca(assunto);
 		
@@ -45,6 +48,13 @@ public class BlogController {
 		result.include("posts", comentariosDao.buscaPorAssunto(assunto));
 		result.include("assunto", assunto);
 		
-		result.redirectTo(BlogController.class).busca(assunto);
+		result.redirectTo(BlogController.class).busca(assuntoFormatadoComHifen);
+	}
+
+	private String formataAssuntoTiraHifen(String assunto) {
+		return assunto.replace("-", " ");
+	}
+	private String formataAssuntoColocaHifen(String assunto) {
+		return assunto.replace(" ", "-");
 	}
 }
