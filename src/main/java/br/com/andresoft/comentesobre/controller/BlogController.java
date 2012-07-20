@@ -4,6 +4,9 @@ import java.util.List;
 
 import br.com.andresoft.comentesobre.dao.ComentariosDao;
 import br.com.andresoft.comentesobre.model.Comentario;
+import br.com.caelum.vraptor.Get;
+import br.com.caelum.vraptor.Path;
+import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
 
@@ -18,6 +21,7 @@ public class BlogController {
 		this.result = result;
 	}
 
+	@Get @Path("/blog/{assunto}")
 	public List<Comentario> busca(String assunto) {
 		return comentariosDao.buscaPorAssunto(assunto);
 

@@ -14,11 +14,10 @@
 		  <p>Comente sobre o que lhe interessa e compartilhe seus pensamentos com o Mundo!</p>
 		  <p><h5>É simples, pesquise abaixo o assunto e começe a comentar</h5></p>
 		  
-		  <form class="form-inline" action="/blog">
+		  <form action="<c:url value="/blog/"/>" method="POST">
 			  	<input type="text" class="input-xxlarge search-query" placeholder="Pesquisar Assunto!" style="font-size: 35px; height: 38px;">
-			    <input type="submit" class="btn btn-primary btn-large">
-			      Buscar!
-			    </a>
+			    <input type="submit" class="btn btn-primary btn-large" value="Buscar">		      
+			    
 		  </form>
 		</div>
                
