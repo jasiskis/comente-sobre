@@ -1,4 +1,5 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
     <head>
         <meta charset="utf-8">
         <title>Comente Sobre</title>
@@ -8,6 +9,8 @@
         
         <!-- Le styles -->
         <link href="<c:url value="/bootstrap/css/bootstrap.css"/>" rel="stylesheet">
+        <link href="<c:url value="/css/jquery.rating.css"/>" rel="stylesheet">
+        
         <style type="text/css">
             body {
                 padding-top: 60px;

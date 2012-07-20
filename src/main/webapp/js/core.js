@@ -9,7 +9,7 @@ $(document).ready(function() {
 				  '</div>');
 			
 		}else{
-			window.location="/comente-sobre/"+assunto;
+			window.location="/comentesobre/"+assunto.replace("/","");
 		}				 
 	});
 });

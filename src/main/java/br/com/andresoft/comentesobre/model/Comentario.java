@@ -6,14 +6,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
+
 @Entity
 public class Comentario {
 	@Id
 	@GeneratedValue
 	private int id;
 	private Calendar data;
+	
+	@NotEmpty(message="O Comentário precisa ser preenchido.")
+	@Length(min=3, message="Comentário precisa ter 3 caracteres no mínimo")
 	private String texto;
+	@NotEmpty(message="O email precisa ser preenchido.")
+	@Email(message="Digite um email válido")
 	private String email;
+	@NotEmpty(message="O Assunto precisa ser preenchido.")
 	private String assunto;
 
 	public Comentario(Calendar data, String texto, String email, String assunto) {

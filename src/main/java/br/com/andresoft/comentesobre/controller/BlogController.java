@@ -7,19 +7,21 @@ import br.com.andresoft.comentesobre.dao.ComentariosDao;
 import br.com.andresoft.comentesobre.model.Comentario;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
-import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.Validator;
 
 @Resource
 public class BlogController {
 
 	private ComentariosDao comentariosDao;
 	private Result result;
+	private Validator validator;
 
-	public BlogController(ComentariosDao cDAO, Result result) {
+	public BlogController(ComentariosDao cDAO, Result result, Validator validator) {
 		this.comentariosDao = cDAO;
 		this.result = result;
+		this.validator = validator;
 	}
 
 	@Get @Path("/{assunto}")
@@ -32,11 +34,12 @@ public class BlogController {
 	}
 	
 	@Get @Path("/{assunto}/comentario")
-	public void comentario(Comentario comentario, String assunto) {
+	public void comentario(final Comentario comentario, String assunto) {
+		validator.validate(comentario);
+		validator.onErrorForwardTo(this).busca(assunto);
 		
 		comentario.setData(Calendar.getInstance());
 				
-		System.out.println(comentario.getTexto()+""+comentario.getEmail());
 		comentariosDao.adiciona(comentario);
 
 		result.include("posts", comentariosDao.buscaPorAssunto(assunto));
